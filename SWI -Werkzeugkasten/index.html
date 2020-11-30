@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+  <!--Links und Titel Anfang-->
+
+  <title>Amar's Werkzeugliste</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin="">
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+    <link href="https://fonts.googleapis.com/css?family=Arimo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="styling.css">
+
+
+<!--Links und Titel Ende-->
+
+</head>
+
+<body>
+
+  <!--Seitentitel Anfang-->
+
+  <div class=" animated zoomIn delay-0.5s jumbotron text-center" >
+    <h1> Amar's Werkzeugkasten <h1>
+        <p class="lead">Wir bieten nur die besten Werkzeuge</p>
+        <hr class="my-4">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn">
+            <input type="image" src= Bilder/Deutsch-logo.png id="deutsch" display =""> 
+            <p>Deutsch</p>
+          </label>
+          <label class="btn">
+            <input type="image" src= Bilder/Englisch-logo.png id="english" display =""> 
+            <p>English</p>
+          </label>
+        </div>
+      </div>
+
+  <!--Seitentitel Schluss-->
+
+  <!--Reservation Anfang-->
+
+  <form class="was-validated"  id="meinformular"> <!--Hier wird die Id für das ganze Formular der Reservation definiert, damit die POST Methode für "Reservation abschliessen" korrekt funktioniert-->
+    <div class="container reservation animated fadeInUp delay-0.5s">
+    <p>
+      <a class="btn btn-outline-secondary col-xs-12 col-sm-12 col-lg-12" id="reservation" data-toggle="collapse"
+        href="#Reservations-Collapse" role="button" aria-expanded="true" aria-controls="Reservations-Collapse">
+        Reservation
+      </a>
+    </p>
+    <div class="collapse" id="Reservations-Collapse">
+      <div class="card card-body">
+        
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputVorname">Vorname</label>
+              <input pattern="[a-zA-Z]+" required type="text" class="form-control" id="inputVorname" name="firstname"
+                placeholder="Geben Sie Ihren Vornamen ein" value="">
+                <div class="invalid-feedback">Vorname fehlt.</div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputName">Name</label>
+              <input pattern="[A-Za-z]+" required type="text" class="form-control" id="inputName" name="lastname"
+                placeholder="Geben Sie Ihre Namen ein." value="">
+                <div class="invalid-feedback">Name fehlt.</div>
+            </div>
+          </div>
+
+          <!--Hier wird die Karte automatisch von Leaflet generiert-->
+         <div id="mapid"></div>
+
+          <div class="form-group">
+            <label for="inputEmail">E-Mail</label>
+            <input required type="email" class="form-control" id="inputEmail" name="email"
+              placeholder="Geben Sie Ihre Email-Adresse ein." value="">
+              <div class="invalid-feedback">E-Mail fehlt.</div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text Projektauswahl" for="inputProjektauswahl">Projektauswahl</label>
+            </div>
+            <select required class="custom-select projekte" id="inputProjektauswahl" name="projid">
+              <option value="" selected>Projekt auswählen</option>
+            </select>
+            <div class="invalid-feedback">Projektauswahl fehlt.</div>
+          </div>
+
+          <div class="datumsauswahl">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                
+                  <div class="form-group">
+                    <label class="control-label" for="date">Reservation von:</label>
+                    <input autocomplete="off" required class="form-control date" id="reservationvon" placeholder='yyyy-mm-dd'
+                      type="text" />
+                      <div class="invalid-feedback">"Datum von" fehlt.</div>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                
+                  <div class="form-group">
+                    <label class="" for="date">Reservation bis:</label>
+                    <input autocomplete="off" required class="form-control date" id="reservationbis" placeholder='yyyy-mm-dd'
+                      type="text" />
+                      <div class="invalid-feedback">"Datum bis" fehlt.</div>
+                  </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputBemerkungen">Bemerkungen</label>
+            <textarea class="form-control" id="inputBemerkungen" rows="3"
+              placeholder="Geben Sie Ihre Bemerkungen an"name="comment"></textarea>
+          </div>
+          <button type="submit" class="btn btn-secondary btn-block reservationabschliessen">Reservieren</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <!--Reservation Schluss-->
+
+  <!--Kostenrechner Anfang-->
+
+  <div class="container warenkorb animated fadeInUp delay-0.5s">
+    <p>
+      <a id="kosten" class="btn btn-outline-secondary col-xs-12 col-sm-12 col-lg-12" data-toggle="collapse"
+        href="#Warenkorb-Collapse" role="button" aria-expanded="true" aria-controls="Warenkorb-Collapse">
+        Kostenrechner
+      </a>
+    </p>
+
+    <div class="collapse" id="Warenkorb-Collapse"> <!--An dieser Stelle wird der Kostenrechner dynamisch generiert-->
+  
+    </div>  
+  </div>
+
+  <!--Kostenrechner Schluss-->
+
+</form>
+
+  <!--Werkezugliste Anfang-->
+
+  <div class="container werkzeugliste animated fadeInUp delay-0.5s">
+    <p>
+      <a class="btn btn-outline-secondary col-xs-12 col-sm-12 col-lg-12" data-toggle="collapse"
+        href="#Werkzeugliste-Collapse" role="button" aria-expanded="true" aria-controls="Werkzeugliste-Collapse">
+        Werkzeugliste
+      </a>
+    </p>
+    <div class="collapse.in" id="Werkzeugliste-Collapse">
+      <div class="card card-body row">
+        <div class="row werkzg"> <!--An dieser Stelle werden die Werkzeuge dynamisch im JavaScript generiert-->
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <!--Werkezugliste Schluss-->
+
+    <!--Sripts Anfang-->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+      <script src="script.js"></script>
+
+<!--Scripts Schluss-->
+
+</body>
+
+</html>
